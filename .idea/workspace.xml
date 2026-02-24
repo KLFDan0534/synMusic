@@ -5,91 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7dd1f6eb-f417-4e2f-a75a-89b122110420" name="更改" comment="xm">
-      <change afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/main_dart.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.metadata" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.windsurf/rules/projrct.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/sync_music/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/sync_music/MdnsService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/values-night/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/sync_music_android.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/AppDelegate.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/AudioEngineManager.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Runner-Bridging-Header.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/RunnerTests/RunnerTests.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/clock/clock.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/clock/clock_synchronizer.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/clock/room_clock.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/diagnostics.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/sync_log.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/sync_metrics.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/throttled_notifier.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/distributor/audio_cache.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/distributor/distributor.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/distributor/http_file_server.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/distributor/track_meta.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/future_start/future_start.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/future_start/future_start_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/playback_sync/keep_sync_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/playback_sync/playback_sync.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/playback_sync/sync_controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/room_discovery/discovered_room.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/room_discovery/mdns_service.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/transport/protocol.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/core/sync_v2/transport/transport_interface.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/pages/sync_lab_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,8 +82,17 @@
       <workItem from="1771950544197" duration="183000" />
       <workItem from="1771950744236" duration="23000" />
       <workItem from="1771950768843" duration="22000" />
-      <workItem from="1771950834413" duration="373000" />
+      <workItem from="1771950834413" duration="761000" />
     </task>
+    <task id="LOCAL-00001" summary="xm">
+      <option name="closed" value="true" />
+      <created>1771951520441</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1771951520441</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
