@@ -1,5 +1,6 @@
 import Foundation
 import Flutter
+import Darwin
 
 /// mDNS/Bonjour 服务管理器
 /// 使用 NSNetService 进行服务发布与发现
