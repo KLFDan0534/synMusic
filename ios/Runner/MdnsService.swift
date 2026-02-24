@@ -103,7 +103,7 @@ class MdnsService: NSObject {
             domain: "local.",
             type: serviceType,
             name: roomId,
-            port: Int16(wsPort)
+            port: Int32(wsPort)
         )
         
         guard let service = netService else {
