@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7dd1f6eb-f417-4e2f-a75a-89b122110420" name="更改" comment="xm">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/MdnsService.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/MdnsService.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/sync_log.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/sync_v2/diagnostics/sync_log.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/core/sync_v2/playback_sync/sync_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/sync_v2/playback_sync/sync_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/pages/sync_lab_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/pages/sync_lab_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,18 +20,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "KLFDan0534"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KLFDan0534&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/KLFDan0534/synMusic.git",
-    "accountId": "71a12e69-034e-4705-b209-e7cc14ffe293"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KLFDan0534/synMusic.git&quot;,
+    &quot;accountId&quot;: &quot;71a12e69-034e-4705-b209-e7cc14ffe293&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -96,7 +99,8 @@
       <workItem from="1771950544197" duration="183000" />
       <workItem from="1771950744236" duration="23000" />
       <workItem from="1771950768843" duration="22000" />
-      <workItem from="1771950834413" duration="2946000" />
+      <workItem from="1771950834413" duration="4355000" />
+      <workItem from="1771996584714" duration="963000" />
     </task>
     <task id="LOCAL-00001" summary="xm">
       <option name="closed" value="true" />
@@ -130,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771953491726</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="xm">
+      <option name="closed" value="true" />
+      <created>1771954297709</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1771954297709</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../calibration/calibration_service.dart';
 import '../diagnostics/sync_log.dart';
@@ -27,6 +28,15 @@ import 'keep_sync_controller.dart';
 
 /// 同步角色
 enum SyncRole { none, host, client }
+
+Future<bool> _writeTextFileIsolate(Map<String, String> args) async {
+  final path = args['path'];
+  final content = args['content'];
+  if (path == null || content == null) return false;
+  final file = File(path);
+  await file.writeAsString(content);
+  return true;
+}
 
 /// 同步状态
 class SyncV2State {
@@ -284,7 +294,9 @@ class SyncV2Controller {
     _diagnostics = SyncDiagnostics();
     _throttledNotifier = ThrottledDiagnosticsNotifier(throttleIntervalMs: 250);
     _logNotifier = ThrottledLogNotifier(throttleIntervalMs: 500);
-    _keepSync = KeepSyncController();
+    _keepSync = KeepSyncController(
+      config: Platform.isIOS ? KeepSyncConfig.iosSafe : const KeepSyncConfig(),
+    );
     _metrics = SyncMetricsCollector();
     _calibration = CalibrationService();
 
@@ -308,6 +320,78 @@ class SyncV2Controller {
     _downloadProgressSub = _cache.progressStream.listen(_onDownloadProgress);
 
     SyncLog.i('SyncV2Controller 初始化完成');
+  }
+
+  void setKeepSyncConfig(KeepSyncConfig config) {
+    _keepSync.updateConfig(config);
+    SyncLog.i('[KeepSync] config_updated: $config', role: _role.name);
+  }
+
+  void setIosSafeMode(bool enabled) {
+    if (!Platform.isIOS) return;
+    setKeepSyncConfig(
+      enabled ? KeepSyncConfig.iosSafe : const KeepSyncConfig(),
+    );
+  }
+
+  bool get isIosSafeMode {
+    if (!Platform.isIOS) return false;
+    final c = _keepSync.config;
+    final s = KeepSyncConfig.iosSafe;
+    return c.speedIntervalMs == s.speedIntervalMs &&
+        c.speedMin == s.speedMin &&
+        c.speedMax == s.speedMax &&
+        c.maxSpeedStepPerUpdate == s.maxSpeedStepPerUpdate;
+  }
+
+  String buildDebugBundleText({int maxLines = 800}) {
+    final sb = StringBuffer();
+    sb.writeln('=== SyncMusic Debug Bundle ===');
+    sb.writeln('exportedAt: ${DateTime.now().toIso8601String()}');
+    sb.writeln('role: ${_role.name}');
+    sb.writeln('roomId: ${_roomId ?? "-"}');
+    sb.writeln('peerId: ${_peerId ?? "-"}');
+    sb.writeln('platform: ${Platform.operatingSystem}');
+    sb.writeln('');
+    sb.writeln('--- Diagnostics ---');
+    sb.writeln(_diagnostics.data.toFormattedString());
+    sb.writeln('');
+    sb.writeln('--- Metrics (samples json, last 120s) ---');
+    sb.writeln(_metrics.exportSamplesJson());
+    sb.writeln('');
+    sb.writeln(
+      '--- Transport logs (last ${_transport.transportLogs.length}) ---',
+    );
+    for (final l in _transport.transportLogs) {
+      sb.writeln(l);
+    }
+    sb.writeln('');
+    sb.writeln('--- SyncLog buffer (last $maxLines) ---');
+    final lines = SyncLog.bufferedLines;
+    final start = lines.length > maxLines ? lines.length - maxLines : 0;
+    for (final l in lines.sublist(start)) {
+      sb.writeln(l);
+    }
+    return sb.toString();
+  }
+
+  Future<String> exportDebugBundleToFile() async {
+    final dir = await getTemporaryDirectory();
+    final filePath =
+        '${dir.path}/sync_debug_${DateTime.now().millisecondsSinceEpoch}.txt';
+    final content = buildDebugBundleText();
+    await _executor.runCpuTask(_writeTextFileIsolate, {
+      'path': filePath,
+      'content': content,
+    });
+    SyncLog.i('[Export] debug_bundle_written: $filePath');
+    return filePath;
+  }
+
+  void clearDebugLogs() {
+    SyncLog.clearBuffer();
+    _logNotifier.clear();
+    SyncLog.i('[Export] logs_cleared');
   }
 
   void _onTransportStateChanged(TransportState state) {
@@ -802,6 +886,13 @@ class SyncV2Controller {
       case KeepSyncAction.noop:
         break;
       case KeepSyncAction.speed:
+        if (Platform.isIOS) {
+          SyncLog.i(
+            '[KeepSync] iOS 禁止 speed 调整（避免追快追慢）: speed=${decision.speed} delta=${decision.deltaMs}',
+            role: 'client',
+          );
+          break;
+        }
         // 保护模式下检查是否允许速度调整
         if (protectMode == ProtectMode.protect) {
           // 保护模式下使用更保守的速度范围
@@ -905,7 +996,7 @@ class SyncV2Controller {
   Future<void> _performCatchUp(HostStateMessage hostState) async {
     final localPath = _trackState.meta!.localPath;
     final durationMs = _trackState.meta!.durationMs;
-    final latencyCompMs = _playbackSync.latencyCompMs;
+    final latencyCompMs = _calibration.totalCompensationMs;
 
     // 计算未来播放时刻（当前时间 + 准备时间）
     const prepareMs = 300; // 预留 300ms 准备时间
@@ -946,6 +1037,10 @@ class SyncV2Controller {
 
       _player!.play();
 
+      if (Platform.isIOS) {
+        await _player!.setSpeed(1.0);
+      }
+
       // 标记追帧完成
       _catchUpDoneEpoch = hostState.epoch;
 
@@ -962,7 +1057,7 @@ class SyncV2Controller {
       );
 
       SyncLog.i(
-        '[CatchUp] 成功: seekMs=$clampedPosMs 启动误差=$startErrorMs',
+        '[CatchUp] 成功: seekMs=$clampedPosMs 启动误差=$startErrorMs latencyComp=$latencyCompMs',
         role: 'client',
       );
     } catch (e) {
@@ -1936,12 +2031,4 @@ class SyncV2Controller {
 
   /// KeepSync 是否启用
   bool get keepSyncEnabled => _keepSync.enabled;
-
-  /// 设置 KeepSync 配置
-  void setKeepSyncConfig(KeepSyncConfig config) {
-    _keepSync.updateConfig(config);
-  }
-
-  /// 获取 KeepSync 配置
-  KeepSyncConfig get keepSyncConfig => _keepSync.config;
 }

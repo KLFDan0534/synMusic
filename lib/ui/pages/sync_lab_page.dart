@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,8 @@ class SyncLabPage extends StatefulWidget {
 
 class _SyncLabPageState extends State<SyncLabPage> {
   final SyncV2Controller _controller = SyncV2Controller();
+
+  String? _lastExportPath;
 
   // 手动输入 IP 控制器
   final _ipController = TextEditingController();
@@ -1539,6 +1542,15 @@ class _SyncLabPageState extends State<SyncLabPage> {
             ),
             const SizedBox(height: 12),
 
+            if (Platform.isIOS) ...[
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [_buildPresetButton('iOS 默认(150/100)', 100, 150)],
+              ),
+              const SizedBox(height: 12),
+            ],
+
             // 校准偏移滑条 + 精细调节
             Row(
               children: [
@@ -1976,6 +1988,55 @@ class _SyncLabPageState extends State<SyncLabPage> {
                 ),
                 const SizedBox(height: 12),
 
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () => _copyDebugBundle(),
+                      icon: const Icon(Icons.copy),
+                      label: const Text('复制日志'),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () => _exportDebugBundle(),
+                      icon: const Icon(Icons.upload_file),
+                      label: const Text('导出日志'),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () => _clearDebugLogs(),
+                      icon: const Icon(Icons.delete),
+                      label: const Text('清空日志'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                    if (Platform.isIOS)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('iOS 安全模式'),
+                          Switch(
+                            value: _controller.isIosSafeMode,
+                            onChanged: (v) {
+                              _controller.setIosSafeMode(v);
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+
+                if (_lastExportPath != null) ...[
+                  const SizedBox(height: 8),
+                  _buildDiagRowWithTooltip(
+                    '导出路径',
+                    _lastExportPath!,
+                    'debug bundle 已写入临时目录，可复制路径从设备取出',
+                  ),
+                ],
+
                 // 状态信息
                 _buildDiagRowWithTooltip('状态', diag.state, '当前同步状态机状态'),
                 _buildDiagRowWithTooltip(
@@ -2270,6 +2331,52 @@ class _SyncLabPageState extends State<SyncLabPage> {
           context,
         ).showSnackBar(SnackBar(content: Text('重连失败: $e')));
       }
+    }
+  }
+
+  Future<void> _copyDebugBundle() async {
+    try {
+      final text = _controller.buildDebugBundleText();
+      await Clipboard.setData(ClipboardData(text: text));
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('已复制日志到剪贴板')));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('复制失败: $e')));
+    }
+  }
+
+  Future<void> _exportDebugBundle() async {
+    try {
+      final path = await _controller.exportDebugBundleToFile();
+      if (!mounted) return;
+      setState(() {
+        _lastExportPath = path;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('已导出: $path')));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('导出失败: $e')));
+    }
+  }
+
+  void _clearDebugLogs() {
+    _controller.clearDebugLogs();
+    if (mounted) {
+      setState(() {
+        _lastExportPath = null;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('日志已清空')));
     }
   }
 }

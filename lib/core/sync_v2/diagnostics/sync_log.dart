@@ -5,6 +5,9 @@ import 'dart:developer' as developer;
 class SyncLog {
   static const String _tagName = 'SyncV2';
 
+  static final List<String> _buffer = [];
+  static const int _maxBufferLines = 800;
+
   // 日志级别
   static const int levelVerbose = 0;
   static const int levelDebug = 1;
@@ -104,6 +107,9 @@ class SyncLog {
     final levelPrefix = _getLevelPrefix(level);
     final fullMessage = '$levelPrefix${buffer.toString()}';
 
+    final ts = DateTime.now().toIso8601String();
+    _pushToBuffer('$ts $fullMessage');
+
     // 使用 developer.log 以支持结构化日志
     developer.log(
       fullMessage,
@@ -112,6 +118,21 @@ class SyncLog {
       error: error,
       stackTrace: stackTrace,
     );
+  }
+
+  static void _pushToBuffer(String line) {
+    _buffer.add(line);
+    if (_buffer.length > _maxBufferLines) {
+      _buffer.removeRange(0, _buffer.length - _maxBufferLines);
+    }
+  }
+
+  static List<String> get bufferedLines => List.unmodifiable(_buffer);
+
+  static String exportBufferedText() => _buffer.join('\n');
+
+  static void clearBuffer() {
+    _buffer.clear();
   }
 
   static String _getLevelPrefix(int level) {

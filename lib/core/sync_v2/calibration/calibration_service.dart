@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
+import '../diagnostics/sync_log.dart';
+
 /// 校准服务 - 管理耳朵校准偏移值
 /// 用于补偿音频输出链路延迟（有线耳机、蓝牙耳机等）
 class CalibrationService extends ChangeNotifier {
@@ -80,11 +82,11 @@ class CalibrationService extends ChangeNotifier {
 
       _initialized = true;
 
-      debugPrint(
-        '[Calibration] 已加载: device=$_deviceModel, calibrationOffset=$_calibrationOffsetMs ms, latencyComp=$_latencyCompMs ms',
+      SyncLog.i(
+        '[Calibration] 已加载: device=$_deviceModel offset=$_calibrationOffsetMs ms latencyComp=$_latencyCompMs ms autoApplied=${_prefs?.getBool(_keyDeviceAutoApplied) ?? false}',
       );
     } catch (e) {
-      debugPrint('[Calibration] 加载失败: $e');
+      SyncLog.e('[Calibration] 加载失败: $e');
       _initialized = true;
     }
 
@@ -97,16 +99,16 @@ class CalibrationService extends ChangeNotifier {
       if (Platform.isAndroid) {
         final androidInfo = await _deviceInfo.androidInfo;
         _deviceModel = androidInfo.model;
-        debugPrint(
-          '[Calibration] 检测到 Android 设备: model=${androidInfo.model}, device=${androidInfo.device}',
+        SyncLog.i(
+          '[Calibration] 检测到 Android 设备: model=${androidInfo.model} device=${androidInfo.device}',
         );
       } else if (Platform.isIOS) {
         final iosInfo = await _deviceInfo.iosInfo;
         _deviceModel = iosInfo.model;
-        debugPrint('[Calibration] 检测到 iOS 设备: model=${iosInfo.model}');
+        SyncLog.i('[Calibration] 检测到 iOS 设备: model=${iosInfo.model}');
       }
     } catch (e) {
-      debugPrint('[Calibration] 设备检测失败: $e');
+      SyncLog.e('[Calibration] 设备检测失败: $e');
       _deviceModel = '';
     }
   }
@@ -117,15 +119,20 @@ class CalibrationService extends ChangeNotifier {
     if (preset != null) {
       _calibrationOffsetMs = preset.calibrationOffsetMs;
       _latencyCompMs = preset.latencyCompMs;
-
-      await _prefs?.setInt(_keyCalibrationOffsetMs, _calibrationOffsetMs);
-      await _prefs?.setInt(_keyLatencyCompMs, _latencyCompMs);
-      await _prefs?.setBool(_keyDeviceAutoApplied, true);
-
-      debugPrint(
-        '[Calibration] 自动应用设备预设: $_deviceModel -> offset=$_calibrationOffsetMs ms, comp=$_latencyCompMs ms',
-      );
+    } else if (Platform.isIOS) {
+      _calibrationOffsetMs = 150;
+      _latencyCompMs = 100;
+    } else {
+      return;
     }
+
+    await _prefs?.setInt(_keyCalibrationOffsetMs, _calibrationOffsetMs);
+    await _prefs?.setInt(_keyLatencyCompMs, _latencyCompMs);
+    await _prefs?.setBool(_keyDeviceAutoApplied, true);
+
+    SyncLog.i(
+      '[Calibration] 自动应用设备预设: device=$_deviceModel offset=$_calibrationOffsetMs ms latencyComp=$_latencyCompMs ms',
+    );
   }
 
   /// 查找设备预设
@@ -144,11 +151,11 @@ class CalibrationService extends ChangeNotifier {
 
     try {
       await _prefs?.setInt(_keyCalibrationOffsetMs, _calibrationOffsetMs);
-      debugPrint('[Calibration] 已保存校准偏移: $_calibrationOffsetMs ms');
+      SyncLog.i('[Calibration] 已保存校准偏移: $_calibrationOffsetMs ms');
       notifyListeners();
       return true;
     } catch (e) {
-      debugPrint('[Calibration] 保存失败: $e');
+      SyncLog.e('[Calibration] 保存失败: $e');
       return false;
     }
   }
@@ -159,11 +166,11 @@ class CalibrationService extends ChangeNotifier {
 
     try {
       await _prefs?.setInt(_keyLatencyCompMs, _latencyCompMs);
-      debugPrint('[Calibration] 已保存延迟补偿: $_latencyCompMs ms');
+      SyncLog.i('[Calibration] 已保存延迟补偿: $_latencyCompMs ms');
       notifyListeners();
       return true;
     } catch (e) {
-      debugPrint('[Calibration] 保存失败: $e');
+      SyncLog.e('[Calibration] 保存失败: $e');
       return false;
     }
   }
@@ -177,7 +184,7 @@ class CalibrationService extends ChangeNotifier {
     await _prefs?.setInt(_keyLatencyCompMs, _latencyCompMs);
     await _prefs?.setBool(_keyDeviceAutoApplied, false);
 
-    debugPrint('[Calibration] 已重置');
+    SyncLog.i('[Calibration] 已重置');
     notifyListeners();
   }
 
